@@ -17,6 +17,6 @@ searchButton.addEventListener("click", function() {
             return response.json();
         })
         .then(function(json) {
-            console.log(json.text);
+            console.log(json);
         });
 });
