@@ -15,21 +15,24 @@ let searchButton = document.getElementById("search-button");
 let searchBox = document.getElementById("search-box");
 
 searchButton.addEventListener("click", function() {
-    searchPokemon();
-});
-
-searchBox.addEventListener("keyup", function(event) {
-    if (event.key == "Enter") {
-        searchPokemon();
-    }
-});
-
-function searchPokemon() {
     if (searchBox.value === "") {
         return;
     }
+    searchPokemon(searchBox.value);
+});
 
-    const query = `${urlPrefix}${searchBox.value}/`;
+searchBox.addEventListener("keyup", function(event) {
+    if (searchBox.value === "") {
+        return;
+    }
+    if (event.key == "Enter") {
+        searchPokemon(searchBox.value);
+    }
+});
+
+function searchPokemon(value) {
+
+    const query = `${urlPrefix}${value}/`;
 
     fetch(query)
         .then(function(response) {
@@ -106,7 +109,6 @@ function displayEvolutions(json) {
     evolutionsList.textContent = "";
     
     // Show the data for the first in the chain
-    console.log(json.chain)
     showEvolutionData(json.chain);
     displayEvolutionsRecursive(evolutions);
 }
@@ -117,14 +119,18 @@ function showEvolutionData(evolution) {
     let evolutionText = document.createElement("h3");
     let evolutionImage = document.createElement("img");
 
+    evolutionDiv.classList.add("clickable")
+
     //set listener
-    evolutionDiv.addEventListener("click", 
+    evolutionDiv.addEventListener("click", function() {
+        searchPokemon(evolution.species.name);
+    });
 
     // TODO: Change this to a div with an image and name, and clickable
     evolutionText.textContent = evolution.species.name;
     fetchPokemonImageUrl(evolution.species.name).then(function(url){
         evolutionImage.src = url;
-    })
+    });
 
     evolutionDiv.appendChild(evolutionText);
     evolutionDiv.appendChild(evolutionImage);
@@ -156,7 +162,6 @@ async function fetchPokemonImageUrl(name) {
             return response.json();
         })
         .then(function(json) {
-            console.log(json.sprites.front_default);
             return json.sprites.front_default;
         })
 
