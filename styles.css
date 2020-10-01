@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+body {
+    font-family: sans-serif;
+}
+
 .clickable {
     cursor: pointer;
 }
