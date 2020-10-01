@@ -5,8 +5,7 @@ function titleCase(str) {
     // Split on spaces
     let titleCased = "";
     for (let word of str.split(" ")) {
-        word.charAt(0) = word.charAt(0).toUpperCase();
-        titleCased += word + " "
+        titleCased += word[0].toUpperCase() + word.slice(1) + " "
     }
     return titleCased;
 }
@@ -70,7 +69,7 @@ function searchEvolutions(url) {
 }
 
 function displayPokemonData(json) {
-    const name = json.name;
+    const name = titleCase(json.name);
     const id = json.id;
     const weight = json.weight;
     const picture = json.sprites.front_default;
@@ -127,7 +126,7 @@ function showEvolutionData(evolution) {
     });
 
     // TODO: Change this to a div with an image and name, and clickable
-    evolutionText.textContent = evolution.species.name;
+    evolutionText.textContent = titleCase(evolution.species.name);
     fetchPokemonImageUrl(evolution.species.name).then(function(url){
         evolutionImage.src = url;
     });
