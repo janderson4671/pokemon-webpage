@@ -1,5 +1,16 @@
 const urlPrefix = "https://pokeapi.co/api/v2/pokemon/";
 
+/****** Utils *******/
+function titleCase(str) {
+    // Split on spaces
+    let titleCased = "";
+    for (let word of str.split(" ")) {
+        word.charAt(0) = word.charAt(0).toUpperCase();
+        titleCased += word + " "
+    }
+    return titleCased;
+}
+
 let searchButton = document.getElementById("search-button");
 let searchBox = document.getElementById("search-box");
 
@@ -90,5 +101,64 @@ function displayPokemonData(json) {
 }
 
 function displayEvolutions(json) {
-    console.log(json);
+    const evolutions = json.chain.evolves_to;
+    let evolutionsList = document.getElementById("evolutions-list");
+    evolutionsList.textContent = "";
+    
+    // Show the data for the first in the chain
+    console.log(json.chain)
+    showEvolutionData(json.chain);
+    displayEvolutionsRecursive(evolutions);
+}
+
+function showEvolutionData(evolution) {
+    let evolutionsList = document.getElementById("evolutions-list");
+    let evolutionDiv = document.createElement("div");
+    let evolutionText = document.createElement("h3");
+    let evolutionImage = document.createElement("img");
+
+    //set listener
+    evolutionDiv.addEventListener("click", 
+
+    // TODO: Change this to a div with an image and name, and clickable
+    evolutionText.textContent = evolution.species.name;
+    fetchPokemonImageUrl(evolution.species.name).then(function(url){
+        evolutionImage.src = url;
+    })
+
+    evolutionDiv.appendChild(evolutionText);
+    evolutionDiv.appendChild(evolutionImage);
+
+    evolutionsList.appendChild(evolutionDiv);
+}
+
+function displayEvolutionsRecursive(evolutions) {
+    // Fill the page with data
+    for (let evolution of evolutions) {
+        showEvolutionData(evolution);
+    }
+
+    // Recurse
+    for (let evolution of evolutions) {
+        displayEvolutionsRecursive(evolution.evolves_to);
+    }
+}
+
+async function fetchPokemonImageUrl(name) {
+
+    let url = await fetch(`${urlPrefix}${name}`)
+        .then(function(response) {
+            if (response.status != 200) {
+                return {
+                    text: "Error calling API" + response.statusText
+                }
+            }
+            return response.json();
+        })
+        .then(function(json) {
+            console.log(json.sprites.front_default);
+            return json.sprites.front_default;
+        })
+
+    return url;
 }
