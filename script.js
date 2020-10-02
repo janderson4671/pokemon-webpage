@@ -71,6 +71,7 @@ function searchEvolutions(url) {
 function displayPokemonData(json) {
     const name = titleCase(json.name);
     const id = json.id;
+    const height = json.height;
     const weight = json.weight;
     const picture = json.sprites.front_default;
     const types = json.types;
@@ -80,14 +81,17 @@ function displayPokemonData(json) {
     let nameElement = document.getElementById("name-id");
     nameElement.textContent = `${name} #${id}`;
 
+    let heightElement = document.getElementById("height");
+    heightElement.textContent = "Height: " + height;
+
     let weightElement = document.getElementById("weight");
-    weightElement.textContent = weight;
+    weightElement.textContent = "Weight: " + weight;
 
     let pictureElement = document.getElementById("pokemon-image");
     pictureElement.setAttribute("src", picture);
 
     let typeList = document.getElementById("type-list");
-    typeList.textContent = "";
+    typeList.textContent = "Type: ";
     for (let type of types) {
         typeList.textContent += type.type.name + " ";
     }
@@ -113,12 +117,16 @@ function displayEvolutions(json) {
 }
 
 function showEvolutionData(evolution) {
+    let evolutionTitle = document.getElementById("evolution-title");
     let evolutionsList = document.getElementById("evolutions-list");
     let evolutionDiv = document.createElement("div");
     let evolutionText = document.createElement("h3");
     let evolutionImage = document.createElement("img");
 
+    evolutionTitle.textContent = "Evolutions"
+
     evolutionDiv.classList.add("clickable")
+    evolutionDiv.classList.add("evolution-item")
 
     //set listener
     evolutionDiv.addEventListener("click", function() {

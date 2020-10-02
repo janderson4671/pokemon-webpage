@@ -6,8 +6,61 @@
 
 body {
     font-family: sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
 .clickable {
     cursor: pointer;
+}
+
+#pokemon-search {
+    width: 70%;
+}
+
+#search-form {
+    display: flex;
+    justify-content: center;
+
+    padding: 2rem;
+}
+
+#evolution-title {
+    margin-top: 4rem;
+    margin-bottom: 1rem
+}
+
+#name-id {
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+#pokemon-image {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
+    scale: 3;
+}
+
+#basic-info {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+#evolutions-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.evolution-item {
+    text-align: center;
+    margin: 1rem;
+}
+
+.evolution-item:hover {
+    scale: 1.05;
+    transition: scale 0.2s;
 }
