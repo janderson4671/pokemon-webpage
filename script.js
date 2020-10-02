@@ -1,17 +1,30 @@
+import {fillNames, nameToId} from "./pokemon_names.js"
+
 const urlPrefix = "https://pokeapi.co/api/v2/pokemon/";
 
 /****** Utils *******/
 function titleCase(str) {
     // Split on spaces
     let titleCased = "";
-    for (let word of str.split(" ")) {
+    for (let word of str.split(/[\s-]/)) {
         titleCased += word[0].toUpperCase() + word.slice(1) + " "
     }
-    return titleCased;
+    return titleCased.slice(0, titleCased.length - 1);
+}
+
+function numericUnits(number) {
+    let str = number.toString();
+    if (str.length == 1) {
+        return "0." + str;
+    }
+    return str.slice(0, str.length - 1) + "." + str[str.length - 1];
 }
 
 let searchButton = document.getElementById("search-button");
 let searchBox = document.getElementById("search-box");
+let pokemonNames = document.getElementById("pokemon-names");
+
+fillNames(pokemonNames);
 
 searchButton.addEventListener("click", function() {
     if (searchBox.value === "") {
@@ -30,8 +43,9 @@ searchBox.addEventListener("keyup", function(event) {
 });
 
 function searchPokemon(value) {
-
-    const query = `${urlPrefix}${value}/`;
+    // Lookup id from name
+    const id = nameToId(value);
+    const query = `${urlPrefix}${id}/`;
 
     fetch(query)
         .then(function(response) {
@@ -68,11 +82,20 @@ function searchEvolutions(url) {
         })
 }
 
+function addSpanChild(parent, text, classes = []) {
+    let span = document.createElement("span");
+    span.textContent = text;
+    for (let c of classes) {
+        span.classList.add(c);
+    }
+    parent.appendChild(span);
+}
+
 function displayPokemonData(json) {
     const name = titleCase(json.name);
     const id = json.id;
-    const height = json.height;
-    const weight = json.weight;
+    const height = numericUnits(json.height);
+    const weight = numericUnits(json.weight);
     const picture = json.sprites.front_default;
     const types = json.types;
     const abilities = json.abilities;
@@ -82,18 +105,19 @@ function displayPokemonData(json) {
     nameElement.textContent = `${name} #${id}`;
 
     let heightElement = document.getElementById("height");
-    heightElement.textContent = "Height: " + height;
+    heightElement.textContent = "Height: " + height + " meters";
 
     let weightElement = document.getElementById("weight");
-    weightElement.textContent = "Weight: " + weight;
+    weightElement.textContent = "Weight: " + weight + " kilograms";
 
     let pictureElement = document.getElementById("pokemon-image");
     pictureElement.setAttribute("src", picture);
 
     let typeList = document.getElementById("type-list");
-    typeList.textContent = "Type: ";
+    typeList.textContent = "";
+    addSpanChild(typeList, "Types:")
     for (let type of types) {
-        typeList.textContent += type.type.name + " ";
+        addSpanChild(typeList, type.type.name, [type.type.name, "type"]);
     }
 
     let abilitiesList = document.getElementById("abilities-list");
@@ -174,3 +198,22 @@ async function fetchPokemonImageUrl(name) {
 
     return url;
 }
+
+
+/** This gets a list of all 809 pokemon we can access from the API */
+// function getAll() {
+//     let pokemons = {};
+//     const promises = [];
+//     for (let i = 1; i <= 809; i++) {
+//         const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+//         promises.push(fetch(url).then(res => res.json()));
+//     }
+//     Promise.all(promises).then(results => {
+//         for (let r of results) {
+//             pokemons[r.name] = [titleCase(r.name)];
+//         }
+//         console.log(JSON.stringify(pokemons));
+//     });
+// }
+
+// getAll();

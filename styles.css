@@ -14,6 +14,11 @@ body {
     cursor: pointer;
 }
 
+#title {
+    margin-top: 2rem;
+    text-align: center;
+}
+
 #pokemon-search {
     width: 70%;
 }
@@ -63,4 +68,104 @@ body {
 .evolution-item:hover {
     scale: 1.05;
     transition: scale 0.2s;
+}
+
+#stats > div,
+#stats > h3 {
+    margin-bottom: 5px;
+}
+
+span {
+    margin-right: 10px;
+}
+
+.type {
+    color: white;
+    border-radius: 3px;
+    padding: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.normal {
+    background-color: #A8A878; 
+}
+
+.fire {
+    background-color: #F08030;
+}
+
+.fighting {
+    background-color: #C03028;
+}
+
+.water {
+    background-color: #6890F0;
+}
+
+.flying {
+    background-color: #A890F0;
+}
+
+.grass {
+    background-color: #78C850;
+}
+
+.poison {
+    background-color: #A040A0;
+}
+
+.electric {
+    color: black;
+    background-color: #F8D030;
+}
+
+.ground {
+    background-color: #E0C068;
+}
+
+.psychic {
+    background-color: #F85888;
+}
+
+.rock {
+    background-color: #B8A038;
+}
+
+.ice {
+    background-color: #98D8D8;
+}
+
+.bug {
+    background-color: #A8B820;
+}
+
+.dragon {
+    background-color: #7038F8;
+}
+
+.ghost {
+    background-color: #705898;
+}
+
+.dark {
+    background-color: #705848;
+}
+
+.steel {
+    background-color: #B8B8D0;
+}
+
+.fairy {
+    background-color: #EE99AC;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 1rem;
+}
+
+#footer a {
+    color: black;
 }
