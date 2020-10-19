@@ -43,6 +43,10 @@ searchBox.addEventListener("keyup", function(event) {
 });
 
 function searchPokemon(value) {
+    // Hide the footer
+    const footer = document.getElementById("footer");
+    footer.classList.add("hidden")
+
     // Lookup id from name
     const id = nameToId(value);
     const query = `${urlPrefix}${id}/`;

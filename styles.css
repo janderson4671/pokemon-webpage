@@ -8,6 +8,7 @@ body {
     font-family: sans-serif;
     display: flex;
     justify-content: center;
+    padding-bottom: 6ch;
 }
 
 .clickable {
@@ -20,7 +21,13 @@ body {
 }
 
 #pokemon-search {
-    width: 70%;
+    width: 90%;
+}
+
+@media only screen and (min-width: 760px) {
+    #pokemon-search {
+        width: 50%;
+    }
 }
 
 #search-form {
@@ -46,6 +53,10 @@ body {
     image-rendering: crisp-edges;
 
     transform: scale(3);
+
+    margin-left: 2ch;
+    margin-top: 4ch;
+    margin-right: 4ch;
 }
 
 #basic-info {
@@ -161,6 +172,7 @@ span {
 }
 
 #footer {
+    text-align: center;
     position: absolute;
     bottom: 0;
     padding-bottom: 1rem;
@@ -168,4 +180,8 @@ span {
 
 #footer a {
     color: black;
+}
+
+.hidden {
+    display: none;
 }
